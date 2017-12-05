@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask import Flask, request, render_template
 from nltk import ne_chunk, pos_tag, word_tokenize
@@ -40,7 +41,9 @@ def my_form_post():
 @app.route('/R_file', methods=['POST'])
 def my_form_post1():
     text = request.form['myFile']
-    file = open(text ,'r')
+    fname = os.path.basename(text)
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))    
+    file = open(ROOT_DIR+'/dataset/'+fname ,'r')
     my_sent = file.read()
     file.close()
     ne_text1=[]
