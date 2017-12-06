@@ -4,6 +4,16 @@ import urllib2
 from flask import Flask, render_template, request, redirect, url_for
 from nltk import ne_chunk, pos_tag, word_tokenize
 
+from nltk.tag import StanfordNERTagger
+from nltk.tag.stanford import CoreNLPNERTagger
+from itertools import groupby
+
+# path to local directory where Stanfprd-NER is installed
+# enter YOUR user name in the next line: stanford_dir = '/Users/<username>/stanford-ner-2017-06-09/'
+stanford_dir = '/Users/hadas/stanford-ner-2017-06-09/'
+jarfile = stanford_dir + 'stanford-ner.jar'
+modelfile = stanford_dir + 'classifiers/english.all.3class.distsim.crf.ser.gz'
+st = StanfordNERTagger(model_filename=modelfile, path_to_jar=jarfile)
 
 app = Flask(__name__)
 
