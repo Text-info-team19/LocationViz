@@ -62,19 +62,13 @@ def my_form_post1():
 @app.route('/R_url', methods=['POST'])
 def my_form_post2():
     text = request.form['myurl']
-    content=ur.urlopen(str(text)).read().decode("utf-8")
-    my_sent = content
-    ne_text2=[]
+    ne_text2 = []
+    netagged_words = st.tag(urllib2.urlopen(str(text)).read().decode('unicode-escape').split())
 
-    for sent in nltk.sent_tokenize(my_sent):
-        for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sent))):
-            #if hasattr(chunk, 'label'):
-               if hasattr(chunk,'label') and chunk.label() == 'GPE':
-               #print(chunk.label(), ' '.join(c[0] for c in chunk))
-                #print(''.join(c[0] for c in chunk))            
-                ne_text2.append (' '.join(c[0] for c in chunk))     
-    return str(ne_text2)   
-
+    for tag, chunk in groupby(netagged_words, lambda x: x[1]):
+        if tag == "LOCATION":
+            ne_text2.append(" ".join(w for w, t in chunk))
+    return str(ne_text2)
 
 
 if __name__ == '__main__':
