@@ -1,6 +1,6 @@
 import os
 import nltk
-import urllib.request as ur
+import urllib2
 from flask import Flask, render_template, request, redirect, url_for
 from flask import Flask, request, render_template
 from nltk import ne_chunk, pos_tag, word_tokenize
